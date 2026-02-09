@@ -1,0 +1,169 @@
+/* Reset de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgb(253, 253, 253);
+  color: #333;
+}
+
+/* Header */
+header {
+  background-color: rgba(30, 119, 153, 0.58);
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+}
+
+header img {
+  height: 80px;
+  user-select: none;
+}
+
+/* Main container */
+main {
+  max-width: 400px;
+  margin: 40px auto;
+  background-color: #3b4d75;
+  border-radius: 10px;
+  padding: 30px 25px 40px;
+  color: #fff;
+}
+
+/* Titre */
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 700;
+  font-size: 1.9rem;
+  color: #ffffff;
+}
+
+/* Texte avant formulaire */
+main > p {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  text-align: center;
+  color: #dde6f0;
+}
+
+.connect-text {
+  text-align: center;
+  font-size: 25px;
+}
+
+/* Formulaire */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%; /* formulaire prend toute la largeur du main */
+  align-items: center; /* centre les éléments horizontalement */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="submit"] {
+  width: 60%;           /* largeur réduite à 80% */
+  padding: 12px 15px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border-style: groove;
+  border-color: rgb(36, 36, 36);
+  outline: none;
+  box-sizing: border-box;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+  max-width: none;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  box-shadow: 0 0 8px 2px rgb(92, 92, 92);
+}
+
+input[type="submit"] {
+  background-color: #3b4d75;
+  color: white;
+  font-weight: 600;
+  border: none;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+  background-color: rgb(46, 67, 90);
+  outline: none;
+}
+
+/* Message d'erreur */
+.erreur {
+  color: #be1f1f;
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Bouton mode sombre */
+#darkToggleBtn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1000;
+  transition: transform 0.2s ease;
+}
+
+/* Image mode sombre */
+.dark-toggle-img {
+  width: 42px;
+  height: 42px;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Mode sombre */
+body.dark-mode {
+  background-color: rgb(36, 36, 36);
+  color: #eee;
+}
+
+body.dark-mode main {
+  background-color: #3b4d75;
+}
+
+body.dark-mode header {
+  background-color: #3b4d75;
+}
+
+body.dark-mode input[type="submit"] {
+  background-color: #3b4d75;
+}
+
+body.dark-mode input[type="submit"]:hover {
+  background-color: #3b4d75;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  main {
+    margin: 30px 15px;
+    padding: 25px 20px 35px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+}

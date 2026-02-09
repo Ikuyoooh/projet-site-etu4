@@ -1,0 +1,161 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: rgb(253, 253, 253);
+  color: black;
+  transition: background-color 0.3s, color 0.3s;
+  min-height: 100vh;
+  position: relative;
+}
+
+header {
+  background-color: rgb(30 119 153 / 58%);
+  margin-bottom: 50px;
+}
+img {
+  height: 100px;
+  margin-left: 15px;
+}
+h1 {
+  color: white;
+  text-align: center;
+}
+
+ .retour {
+   display: inline-block;
+   text-decoration: none;
+   color: #3b4d75;
+   margin: 15px 20px;
+   font-weight: bold;
+    }
+
+#titre {
+  background-color: #3b4d75;
+  padding: 10px;
+  margin: 20px;
+  border-radius: 8px;
+}
+.btn-container {
+  text-align: center;
+  margin-top: 20px;
+}
+a.btn {
+  width: 250px;
+  height: 200px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin: 50px;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  transform: scale(1);
+  position: relative;
+  background-color: #3b4d75;
+}
+a.btn:hover {
+  background-color: #3b4d75;
+  transform: scale(1.1);
+}
+.img1 {
+  height: 130px;
+  width: 130px;
+  margin-top: 10px;
+}
+.img2 {
+  height: 145px;
+  width: 145px;
+  margin-top: 10px;
+}
+.img3 {
+  height: 150px;
+  width: 150px;
+  margin-top: 10px;
+}
+
+
+/* Mode sombre */
+
+body.dark-mode header {
+  background-color: #3b4d75;
+}
+
+body.dark-mode {
+  background-color:rgb(36, 36, 36);
+  color: white;
+}
+body.dark-mode #titre {
+  background-color: #3b4d75;
+}
+body.dark-mode a.btn {
+  background-color: #3b4d75;
+  color: white;
+}
+body.dark-mode a.btn:hover {
+  background-color: #3b3b3b;
+}
+
+#darkToggleBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: none;
+  outline: none;
+  z-index: 1000;
+}
+#darkToggleBtn:hover,
+#darkToggleBtn:focus {
+  outline: none;
+  box-shadow: none;
+  transform: none;
+}
+.dark-toggle-img {
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  user-select: none;
+}
+/* Accessibilité */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+   body.dark-mode .retour {
+      color: #ccc;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+  a.btn {
+    width: 80%;
+    height: auto;
+    margin: 20px auto;
+    font-size: 16px;
+  }
+  .img1, .img2, .img3 {
+    width: 100px;
+    height: 100px;
+  }
+}

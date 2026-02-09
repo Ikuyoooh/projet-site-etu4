@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#header {
+    background: #1E799994;
+    padding: 20px 10px;
+    display: flex;
+}
+
+#header img {
+    height: 80px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#retour {
+    height: 20px;
+}
+
+#index {
+    margin: 30px 15vw;
+    padding: 20px 25px;
+}
+
+#connexion {
+    padding: 10px 25px;
+    border-radius: 10px;
+    background: #1E799994;
+    border: none;
+    font-size: 20px;
+}
+
+.connexion {
+    margin: 0px 0px 20px 0px;
+}
+
+.données {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 20px;
+    max-width: 100%;
+}
+
+.caché {
+    display: none;
+}
+
+#main {
+    border: solid 1px black;
+    border-radius: 20px;
+    box-shadow: black 0px 0px 25px 5px;
+    margin: 1vw;
+    padding: 1vw;
+}
+
+.main {
+    margin: 1vw;
+}
+
+.menu_block {
+    border: 1px solid black;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.bouton_menu {
+    padding: 20px 25px;
+    background: #1F2a44;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    box-sizing: border-box;
+    color: white;
+}
+
+.bouton_menu:hover {
+    background-color: #101212e6;
+}
+
+
+.cours {
+  transition: all 0.3s ease;
+}
+
+.a {
+    padding: 20px 10px;
+    border-top: black solid 1px;
+    background-color: #2e3d63;
+    color: white;
+}
+
+.a:hover {
+    background-color: #3b4d75;
+}
+
+.cours a, .afficher_plus a,.ligne a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.cours a:hover, .afficher_plus:hover,.ligne a:hover {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.afficher_plus:hover {
+    background-color: #1E799994;
+}
+.ligne {
+    padding: 5px 2vw 5px 2vw;
+    font-size: 20px;
+    background-color: #e6f5f5;
+}
+
+.icone {
+    height: 20px;
+}
+
+.afficher_plus {
+    background-color: #171f2294;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 10px;
+    max-width: fit-content;
+}
+
+h2 {
+    font-size: clamp(18px, 3vw, 36px);
+
+}
+
+textarea {
+  width: 50%;
+  height: 300px;
+  font-family: monospace;
+  font-size: 16px;
+}
+
+.toolbar {
+    padding: 10px;
+    border-top: #ccc solid 1px;
+    border-right: #ccc solid 1px;
+    border-left: #ccc solid 1px;
+    border-radius: 10px 0px 0px 0px;
+}
+
+.toolbar button {
+  margin-right: 5px;
+  padding: 0px 5px;
+  font-weight: bold;
+  border: none;
+  background: none;
+}
+
+.toolbar button:hover {
+    border: #ccc solid 1px;
+    border-radius: 5px;
+    background-color: #ccc;
+}
+
+.toolbar button img {
+    height: 25px;
+}
+
+#editor, #preview {
+  width: 100%;
+  min-height: 200px;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 16px;
+  box-sizing: border-box;
+  min-width: 500px;
+  max-width: 750px;
+}
+
+#editor {
+  border: 1px solid #ccc;
+}
+
+#preview {
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  overflow-x: auto;
+  word-wrap: break-word;
+}
+
+#preview ul,
+#preview ol {
+  padding-left: 20px;
+  list-style-position: inside; /* ou 'outside' si tu veux aligner les bullets à gauche */
+}
+
+#preview li {
+  margin-bottom: 5px;
+}
+.as {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+}
+
+#preview img, #markdownContent img {
+    height: 100px;
+    transition: ease 1s;
+}
+
+#preview img:hover, #markdownContent img:hover {
+    height: 200px;
+}
