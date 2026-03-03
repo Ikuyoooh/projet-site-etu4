@@ -1,0 +1,342 @@
+@startuml
+left to right direction
+skinparam actorStyle awesome
+
+actor "Professeur" as Prof
+
+' ================== BLOCS PRINCIPAUX ==================
+rectangle "Authentification" {
+  usecase "S'authentifier\n(login / mot de passe)" as UC_Authentification
+}
+
+rectangle "Gestion des utilisateurs" {
+  usecase "Gérer les utilisateurs" as UC_GererUtilisateurs
+
+  usecase "Créer un utilisateur" as UC_CreaUtilisateur
+  usecase "Modifier un utilisateur" as UC_ModUtilisateur
+  usecase "Supprimer un utilisateur" as UC_SupUtilisateur
+  usecase "Lister les utilisateurs" as UC_ListerUtilisateur
+}
+
+rectangle "Gestion des classes et élèves" {
+  usecase "Gérer les classes\net les élèves" as UC_GererClasseEleve
+
+  usecase "Créer une classe" as UC_CreaClasse
+  usecase "Modifier une classe" as UC_ModClasse
+  usecase "Supprimer une classe" as UC_SupClasse
+  usecase "Créer un élève" as UC_CreaEleve
+  usecase "Modifier un élève" as UC_ModEleve
+  usecase "Supprimer un élève" as UC_SupEleve
+  usecase "Visualiser les classes\net les élèves" as UC_VisuClasseEleve
+}
+
+rectangle "Gestion des formations" {
+
+  usecase "Gérer les formations" as UC_GererFormations
+  
+  ' --- Détails Formations ---
+  usecase "Créer une formation" as UC_CreaFormation
+  usecase "Modifier une formation" as UC_ModFormation
+  usecase "Supprimer une formation\n(sans supprimer les modules)" as UC_SupFormation
+  usecase "Choisir un nom" as UC_choixNomForm
+  usecase "Choisir une classe" as UC_choisClasse
+  usecase "Choisir un référentiel" as UC_choixRef
+  usecase "Déplacer des modules" as UC_DeplacModules
+  usecase "Insérer un module" as UC_insererModule 
+  usecase "Gérer les modules" as UC_GererModule2 #11aaff
+}
+
+rectangle "Gestion des modules" {
+  usecase "Gérer les modules" as UC_GererModules #11aaff
+ 
+  ' --- Détails Modules ---
+  usecase "Créer un module" as UC_CreaModule
+  usecase "Afficher / masquer un élément" as UC_affMasqElement
+  usecase "Modifier un module" as UC_ModModule
+  usecase "Supprimer un module\n(sans supprimer les documents)" as UC_SupModule
+  usecase "Paramétrer le blocage\nde l'avancement du module" as UC_BlocageModule
+  usecase "Gérer les éléments" as UC_GererElements #11ffaa
+  usecase "Déplacer un élément" as UC_DeplacElements
+  usecase "Insérer un élément" as UC_insererElement
+  usecase "Choisir un nom" as UC_choixNomModule
+}
+
+rectangle "Gestion des éléments" {
+  usecase "Gérer les éléments" as UC_GererDocuments #11ffaa
+  usecase "Gérer les cours" as UC_GestionCours #A1A1AA
+  usecase "Gérer les QCM" as UC_GestionQCM #11AA11
+  usecase "Gérer les TP/TD" as UC_GestionTP #AA11AA
+  usecase "Gérer les médias\n(PDF, images…)" as UC_GestionMedias #BBA1A1
+}
+
+rectangle "Gestion des TP/TD" {
+  usecase "Gérer les TP et les TD" as UC_GererTP #AA11AA
+  usecase "Créer / modifier TP/TD" as UC_creerTP
+  usecase "Visualiser TP/TD" as UC_visuTP
+  usecase "Éditer en PDF TP/TD" as UC_editePdfTP
+  usecase "Lister les TP/TD\n(ordre alphabétique ou par date)" as UC_listTP
+  usecase "Filtrer les TP/TD\npar thème" as UC_filtrerTP
+  usecase "Supprimer les TP/TD" as UC_suppTP
+
+  usecase "Copier les TP/TD" as UC_CopierTP
+  usecase "Création de fiche d'évaluation\nautomatique" as UC_GestionFicheTP #aaaaff
+  usecase "Choisir le matériel" as UC_GestionMateriel #11ffff
+  usecase "Choisir un thème" as UC_choixThemeTP #ff5555
+}
+
+rectangle "Gérer les fiches d'évaluation des TP/TD" {
+  usecase "Gérer les fiches d'évaluation TP/TD" as UC_GererFiche #aaaaff
+  
+  usecase "Créer / modifier une fiche" as UC_creerModifierFiche
+  usecase "Visualiser une fiche" as UC_visuFiche
+  usecase "Éditer une fiche en PDF" as UC_editerPdfFiche
+  usecase "Supprimer une fiche" as UC_supprimerFiche
+  usecase "Filtrer les fiches\npar thème et par date" as UC_filtrerFiche
+  usecase "Copier une fiche" as UC_copierFiche
+}
+
+rectangle "Gestion des QCM" {
+  usecase "Gérer les QCM" as UC_GererQCM #11AA11
+
+  ' Fonctions principales (alignées sur TP/TD)
+  usecase "Créer / modifier un QCM" as UC_creerQCM
+  usecase "Visualiser un QCM" as UC_visuQCM
+  usecase "Éditer un QCM en PDF" as UC_editerPdfQCM
+  usecase "Lister les QCM\n(ordre alphabétique ou par date)" as UC_listerQCM
+  usecase "Filtrer les QCM\npar thème" as UC_filtrerQCM
+  usecase "Supprimer un QCM" as UC_supprimerQCM
+  usecase "Copier un QCM" as UC_copierQCM
+
+  ' Fonctions existantes à conserver
+  usecase "Gérer la banque\nde questions" as UC_BanqueQuestions
+  usecase "Importer des questions\ndepuis un fichier CSV" as UC_ImportExcel
+  usecase "CRUD question" as UC_crudQuestion
+  
+  usecase "Consulter les résultats" as UC_Resultats  
+  usecase "Choisir un thème" as UC_choixThemeQCM #ff5555
+}
+
+' ====== ORGANISATION : COURS / MÉDIAS / THÈMES ======
+
+rectangle "Gestion des cours" {
+  usecase "Gérer les cours" as UC_GererCours #A1A1AA
+  usecase "Créer / modifier un cours" as UC_creerCours
+  usecase "Visualiser un cours" as UC_visuCours
+  usecase "Éditer un cours en PDF" as UC_editerPdfCours
+  usecase "Lister les cours\n(ordre alphabétique ou par date)" as UC_listerCours
+  usecase "Filtrer les cours\npar thème" as UC_filtrerCours
+  usecase "Supprimer un cours" as UC_supprimerCours
+  usecase "Copier un cours" as UC_copierCours
+}
+
+rectangle "Gestion des médias" {
+  usecase "Gérer les médias" as UC_GererMedia #BBA1A1
+
+  usecase "Insérer un média" as UC_insererMedia
+  usecase "Choisir un fichier" as UC_choisirFichierMedia
+  usecase "Choisir un titre" as UC_choisirTitreMedia
+  usecase "Choisir un thème" as UC_choisirThemeMedia #ff5555
+
+  usecase "Visualiser un média" as UC_visuMedia
+  usecase "Lister les médias\n(ordre alphabétique ou par date)" as UC_listerMedia
+  usecase "Filtrer les médias\npar type ou par thème" as UC_filtrerMedia
+  usecase "Supprimer un média" as UC_supprimerMedia
+}
+
+rectangle "Gestion des thèmes" {
+  usecase "Gérer les thèmes" as UC_GererTheme #ff5555
+
+  usecase "Créer / modifier un thème" as UC_creerTheme
+  usecase "Lister les thèmes\n(ordre alphabétique ou par date)" as UC_listerTheme
+  usecase "Supprimer un thème" as UC_supprimerTheme
+}
+
+rectangle "Référentiels et compétences" {
+  usecase "Gérer les référentiels\net les compétences" as UC_GererRefComp
+  usecase "Créer / modifier un référentiel" as UC_creerRef
+  usecase "Supprimer un référentiel" as UC_supprimerRef
+  usecase "Visualiser un référentiel" as UC_visuRef
+  usecase "Lister les référentiels" as UC_listerRef
+}
+
+rectangle "Visualiser les résultats" {
+  usecase "Visualiser les résultats" as UC_VisuResul
+  usecase "Visualiser les résultats d'un élève" as UC_VisuResulEleve
+  usecase "Visualiser les résultats\nde tous les élèves sur une compétence" as UC_VisuResulComp
+  usecase "Visualiser la grille finale" as UC_VisuGrilleFinale
+  usecase "Éditer la grille finale en PDF" as UC_editerGrilleFinale
+  usecase "Éditer les résultats d'un élève en PDF" as editerResultatEleve
+  usecase "Éditer les résultats d'une compétence en PDF" as editerResultatCompetence
+}
+
+rectangle "Gestion du matériel" {
+  usecase "Gérer le matériel\nde l'atelier" as UC_GererMateriel #11ffff
+  usecase "CRUD matériel" as UC_crudMateriel
+  usecase "CRUD catégorie" as UC_crudCategorie
+  usecase "Modifier l'effectif" as UC_modifierEffectif 
+}
+
+rectangle "Sauvegarde du système" {
+  usecase "Gérer la sauvegarde" as UC_GererSauvegarde
+  usecase "Lancer une sauvegarde\nde la base de données" as UC_SauvegardeBDD
+  usecase "Lancer une sauvegarde\ndes médias" as UC_SauvegardeMedia
+  usecase "Importer une base de données\nà partir d'une sauvegarde" as UC_ImportBDD
+  usecase "Importer des médias" as UC_ImportMedia
+}
+
+' ================== LIENS PROFESSEUR -> CAS PRINCIPAUX ==================
+
+Prof --> UC_Authentification
+Prof --> UC_GererUtilisateurs
+Prof --> UC_GererClasseEleve
+Prof --> UC_GererFormations
+Prof --> UC_GererModules
+Prof --> UC_GererDocuments
+Prof --> UC_GererTP
+Prof --> UC_GererFiche
+Prof --> UC_GererQCM
+Prof --> UC_GererCours
+Prof --> UC_GererMedia
+Prof --> UC_GererTheme
+Prof --> UC_GererRefComp
+Prof --> UC_VisuResul
+Prof --> UC_VisuGrilleFinale
+Prof --> UC_GererMateriel
+Prof --> UC_GererSauvegarde
+
+' ================== DÉCOMPOSITION PAR <<include>> / <<extend>> ==================
+
+
+' Gestion des utilisateurs
+UC_GererUtilisateurs --> UC_CreaUtilisateur     : <<include>>
+UC_GererUtilisateurs --> UC_ModUtilisateur      : <<include>>
+UC_GererUtilisateurs --> UC_SupUtilisateur      : <<include>>
+UC_GererUtilisateurs --> UC_ListerUtilisateur   : <<include>>
+
+
+' Gestion classes/élèves
+UC_GererClasseEleve --> UC_CreaClasse        : <<include>>
+UC_GererClasseEleve --> UC_ModClasse         : <<include>>
+UC_GererClasseEleve --> UC_SupClasse         : <<include>>
+UC_GererClasseEleve --> UC_CreaEleve         : <<include>>
+UC_GererClasseEleve --> UC_ModEleve          : <<include>>
+UC_GererClasseEleve --> UC_SupEleve          : <<include>>
+UC_GererClasseEleve --> UC_VisuClasseEleve   : <<include>>
+
+' Gestion formations
+UC_GererFormations --> UC_CreaFormation      : <<include>>
+UC_GererFormations --> UC_ModFormation       : <<include>>
+UC_GererFormations --> UC_SupFormation       : <<include>>
+UC_CreaFormation --> UC_insererModule        : <<include>>
+UC_CreaFormation --> UC_DeplacModules        : <<include>>
+UC_CreaFormation --> UC_choixNomForm         : <<include>>
+UC_CreaFormation --> UC_choisClasse          : <<include>>
+UC_CreaFormation --> UC_choixRef             : <<include>>
+UC_insererModule <-- UC_GererModule2         : <<extend>> 
+
+' Gestion modules
+UC_GererModules --> UC_CreaModule            : <<include>>
+UC_GererModules --> UC_ModModule             : <<include>>
+UC_GererModules --> UC_SupModule             : <<include>>
+UC_GererModules --> UC_BlocageModule         : <<include>>
+UC_CreaModule --> UC_choixNomModule          : <<include>>
+UC_CreaModule --> UC_insererElement          : <<include>>
+UC_CreaModule --> UC_DeplacElements          : <<include>>
+UC_CreaModule --> UC_affMasqElement          : <<include>>
+UC_insererElement <-- UC_GererElements       : <<extend>>
+
+' Gestion éléments (routage vers sous-gestion)
+
+UC_GererDocuments --> UC_GestionCours        : <<include>>
+UC_GererDocuments --> UC_GestionQCM          : <<include>>
+UC_GererDocuments --> UC_GestionTP           : <<include>>
+UC_GererDocuments --> UC_GestionMedias       : <<include>>
+
+' Gestion TP/TD
+UC_GererTP --> UC_creerTP                    : <<include>>
+UC_GererTP --> UC_visuTP                     : <<include>>
+UC_creerTP --> UC_GestionFicheTP             : <<include>>
+UC_creerTP --> UC_choixThemeTP               : <<include>>
+UC_GererTP --> UC_filtrerTP                  : <<include>>
+UC_GererTP --> UC_listTP                     : <<include>>
+UC_GererTP --> UC_suppTP                     : <<include>>
+UC_creerTP --> UC_GestionMateriel            : <<include>>
+
+UC_GererTP <-- UC_CopierTP                   : <<extend>>
+UC_GererTP <-- UC_editePdfTP                 : <<extend>>
+
+' Gestion fiches d'évaluation
+UC_GererFiche --> UC_creerModifierFiche      : <<include>>
+UC_GererFiche --> UC_visuFiche               : <<include>>
+UC_GererFiche --> UC_supprimerFiche          : <<include>>
+UC_GererFiche --> UC_filtrerFiche            : <<include>>
+UC_GererFiche <-- UC_editerPdfFiche          : <<extend>>
+UC_GererFiche <-- UC_copierFiche             : <<extend>>
+
+' Gestion QCM
+UC_GererQCM --> UC_creerQCM                  : <<include>>
+UC_creerQCM --> UC_choixThemeQCM             : <<include>>
+UC_GererQCM --> UC_visuQCM                   : <<include>>
+UC_GererQCM --> UC_listerQCM                 : <<include>>
+UC_GererQCM --> UC_filtrerQCM                : <<include>>
+UC_GererQCM --> UC_supprimerQCM              : <<include>>
+UC_creerQCM --> UC_crudQuestion              : <<include>>
+
+UC_GererQCM --> UC_BanqueQuestions           : <<include>>
+UC_BanqueQuestions --> UC_crudQuestion       : <<include>>
+UC_BanqueQuestions <-- UC_ImportExcel        : <<extend>>
+UC_GererQCM <-- UC_copierQCM                 : <<extend>>
+UC_GererQCM <-- UC_editerPdfQCM              : <<extend>>
+UC_GererQCM <-- UC_Resultats                 : <<extend>>
+
+' Gestion cours
+UC_GererCours --> UC_creerCours              : <<include>>
+UC_GererCours --> UC_visuCours               : <<include>>
+UC_GererCours --> UC_listerCours             : <<include>>
+UC_GererCours --> UC_filtrerCours            : <<include>>
+UC_GererCours --> UC_supprimerCours          : <<include>>
+UC_GererCours <-- UC_editerPdfCours          : <<extend>>
+UC_GererCours <-- UC_copierCours             : <<extend>>
+
+' Gestion médias
+UC_GererMedia --> UC_insererMedia            : <<include>>
+UC_insererMedia --> UC_choisirFichierMedia   : <<include>>
+UC_insererMedia --> UC_choisirTitreMedia     : <<include>>
+UC_insererMedia --> UC_choisirThemeMedia     : <<include>>
+UC_GererMedia --> UC_visuMedia               : <<include>>
+UC_GererMedia --> UC_listerMedia             : <<include>>
+UC_GererMedia --> UC_filtrerMedia            : <<include>>
+UC_GererMedia --> UC_supprimerMedia          : <<include>>
+
+' Gestion thèmes
+UC_GererTheme --> UC_creerTheme              : <<include>>
+UC_GererTheme --> UC_listerTheme             : <<include>>
+UC_GererTheme --> UC_supprimerTheme          : <<include>>
+
+' Référentiels et compétences
+UC_GererRefComp --> UC_creerRef              : <<include>>
+UC_GererRefComp --> UC_supprimerRef          : <<include>>
+UC_GererRefComp --> UC_visuRef               : <<include>>
+UC_GererRefComp --> UC_listerRef             : <<include>>
+
+' Visualiser les résultats
+UC_VisuResul --> UC_VisuResulEleve           : <<include>>
+UC_VisuResul --> UC_VisuResulComp            : <<include>>
+
+UC_VisuResulComp <-- editerResultatCompetence : <<extend>>
+UC_VisuResulEleve <-- editerResultatEleve     : <<extend>>
+
+UC_VisuGrilleFinale <-- UC_editerGrilleFinale : <<extend>>
+
+' Matériel
+UC_GererMateriel --> UC_crudMateriel         : <<include>>
+UC_GererMateriel --> UC_crudCategorie        : <<include>>
+UC_GererMateriel --> UC_modifierEffectif     : <<include>>
+
+' Sauvegarde
+UC_GererSauvegarde --> UC_SauvegardeBDD      : <<include>>
+UC_GererSauvegarde --> UC_SauvegardeMedia    : <<include>>
+UC_GererSauvegarde --> UC_ImportBDD          : <<include>>
+UC_GererSauvegarde --> UC_ImportMedia        : <<include>>
+
+@enduml
