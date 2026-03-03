@@ -8,7 +8,10 @@
 ]]></contenu></cour><cour><titre>Cours du 03/02/2026 08:14:43</titre><fichier>test.md</fichier><utilisateur_id>17</utilisateur_id><date_modification>03/02/2026 08:14:43</date_modification><contenu><![CDATA[# Bienvenue
 
 Écris ici ton cours en Markdown.
+<<<<<<< HEAD
 ]]></contenu></cour><cour><titre>Cours du 03/03/2026 16:09:24</titre><fichier>cc.md</fichier><utilisateur_id>18</utilisateur_id><date_modification>03/03/2026 16:09:24</date_modification><contenu><![CDATA[# Bienvenue
 c
 Écris ici ton cours en Markdown.
+=======
+>>>>>>> 73f165dbf481afdb2718ca6d6036256b710f1581
 ]]></contenu></cour></cours></site>

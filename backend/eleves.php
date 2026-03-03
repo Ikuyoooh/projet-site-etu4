@@ -81,7 +81,11 @@ try {
 <div class="main">
     <div id="admin" class="collapsed">
         <h3>Admin</h3>
+<<<<<<< HEAD
         <a href="backend.php"><button class="button_admin">Tableau de Bord</button></a><br>
+=======
+        <a href="index.php"><button class="button_admin">Tableau de Bord</button></a><br>
+>>>>>>> 73f165dbf481afdb2718ca6d6036256b710f1581
         <a href="eleves.php"><button class="button_admin">Élèves</button></a><br>
         <a href="profs.php"><button class="button_admin">Professeur</button></a><br>
         <a href="logs.php"><button class="button_admin">Logs</button></a><br>

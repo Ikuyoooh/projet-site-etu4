@@ -1147,6 +1147,7 @@ Stack trace:
 #1 {main}
   thrown in C:\wamp64\www\site\backend\eleves.php on line 49
 [19-Jan-2026 16:34:01 UTC] Élève ajouté : Raboteur Tiago - Mot de passe : n2UKos7#E9
+<<<<<<< HEAD
 [02-Feb-2026 12:34:53 UTC] Erreur lors du comptage : SQLSTATE[42S02]: Base table or view not found: 1146 La table 'site.eleves' n'existe pas
 [02-Feb-2026 12:42:34 UTC] Erreur lors du comptage : SQLSTATE[42S02]: Base table or view not found: 1146 La table 'site.eleves' n'existe pas
 [02-Feb-2026 12:42:51 UTC] Erreur lors du comptage : SQLSTATE[42S02]: Base table or view not found: 1146 La table 'site.eleves' n'existe pas
@@ -1201,3 +1202,24 @@ Stack trace:
 [10-Feb-2026 07:22:23 UTC] ❌ Erreur PDO sauvegarde QCM : SQLSTATE[42S22]: Column not found: 1054 Champ 'datecreation' inconnu dans field list
 [10-Feb-2026 07:22:23 UTC] Code erreur : 42S22
 [10-Feb-2026 07:22:23 UTC] SQL State : 42S22
+=======
+[02-Feb-2026 12:34:53 UTC] Erreur lors du comptage : SQLSTATE[42S02]: Base table or view not found: 1146 La table 'site.eleves' n'existe pas
+[02-Feb-2026 12:42:34 UTC] Erreur lors du comptage : SQLSTATE[42S02]: Base table or view not found: 1146 La table 'site.eleves' n'existe pas
+[02-Feb-2026 12:42:51 UTC] Erreur lors du comptage : SQLSTATE[42S02]: Base table or view not found: 1146 La table 'site.eleves' n'existe pas
+[02-Feb-2026 12:58:56 UTC] PHP Warning:  Undefined variable $xml in C:\wamp64\www\projet-site\interface\cours.php on line 96
+[02-Feb-2026 12:58:56 UTC] PHP Stack trace:
+[02-Feb-2026 12:58:56 UTC] PHP   1. {main}() C:\wamp64\www\projet-site\interface\cours.php:0
+[02-Feb-2026 12:58:56 UTC] PHP Fatal error:  Uncaught Error: Call to a member function addChild() on null in C:\wamp64\www\projet-site\interface\cours.php:96
+Stack trace:
+#0 {main}
+  thrown in C:\wamp64\www\projet-site\interface\cours.php on line 96
+[02-Feb-2026 15:44:54 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in C:\wamp64\www\projet-site\interface\parametres.php on line 18
+[02-Feb-2026 15:44:54 UTC] PHP Stack trace:
+[02-Feb-2026 15:44:54 UTC] PHP   1. {main}() C:\wamp64\www\projet-site\interface\parametres.php:0
+[02-Feb-2026 15:45:11 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in C:\wamp64\www\projet-site\interface\parametres.php on line 18
+[02-Feb-2026 15:45:11 UTC] PHP Stack trace:
+[02-Feb-2026 15:45:11 UTC] PHP   1. {main}() C:\wamp64\www\projet-site\interface\parametres.php:0
+[02-Feb-2026 15:45:23 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in C:\wamp64\www\projet-site\interface\parametres.php on line 18
+[02-Feb-2026 15:45:23 UTC] PHP Stack trace:
+[02-Feb-2026 15:45:23 UTC] PHP   1. {main}() C:\wamp64\www\projet-site\interface\parametres.php:0
+>>>>>>> 73f165dbf481afdb2718ca6d6036256b710f1581
