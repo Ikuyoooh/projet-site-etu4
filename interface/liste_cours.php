@@ -12,11 +12,6 @@ $dossier = "cours/" . $user_id . "/";
 
 $cours_utilisateur = [];
 
-<<<<<<< HEAD
-
-=======
-// 1) Sélectionner les cours en base pour cet utilisateur (si la table existe / est remplie)
->>>>>>> 73f165dbf481afdb2718ca6d6036256b710f1581
 if (isset($pdo)) {
     try {
         $stmt = $pdo->prepare("SELECT * FROM cours WHERE user_id = :user_id");
@@ -29,11 +24,6 @@ if (isset($pdo)) {
     }
 }
 
-<<<<<<< HEAD
-
-=======
-// 2) Si aucun cours en base, on tente un fallback en lisant directement le dossier cours/{user_id}
->>>>>>> 73f165dbf481afdb2718ca6d6036256b710f1581
 if (empty($cours_utilisateur) && is_dir($dossier)) {
     foreach (glob($dossier . '*.md') as $chemin_fichier) {
         $cours_utilisateur[] = [
