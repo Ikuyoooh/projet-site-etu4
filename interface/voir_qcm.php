@@ -60,7 +60,6 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Voir QCM - <?= htmlspecialchars($qcm['titre']) ?></title>
-    >
     <style>
         .qcm-header {
             background: #f0f0f0;
@@ -170,12 +169,12 @@ if (isset($_GET['id'])) {
 
 <!-- Informations du QCM -->
 <div class="qcm-header">
-    <h1>📋 <?= htmlspecialchars($qcm['titre']) ?></h1>
+    <h1><?= htmlspecialchars($qcm['titre']) ?></h1>
     <div class="qcm-info">
-        <span>📚 <?= htmlspecialchars($qcm['cours']) ?></span>
-        <span>📖 <?= htmlspecialchars($qcm['module']) ?></span>
-        <span>⏱️ <?= intval($qcm['temps']) ?> minutes</span>
-        <span>❓ <?= count($questions) ?> question(s)</span>
+        <span><?= htmlspecialchars($qcm['cours']) ?></span>
+        <span><?= htmlspecialchars($qcm['module']) ?></span>
+        <span><?= intval($qcm['temps']) ?> minutes</span>
+        <span><?= count($questions) ?> question(s)</span>
     </div>
     <small style="color: #666;">Créé le : <?= htmlspecialchars($qcm['date_creation']) ?></small>
 </div>
@@ -183,23 +182,23 @@ if (isset($_GET['id'])) {
 <!-- Barre d'actions -->
 <div class="actions-bar">
     <a href="modifier_qcm.php?id=<?= $qcm['id'] ?>" class="btn btn-warning">
-        ✏️ Modifier ce QCM
+        Modifier ce QCM
     </a>
     <form method="post" action="supprimer_qcm.php" style="display: inline;"
           onsubmit="return confirm('Supprimer ce QCM et ses <?= count($questions) ?> question(s) ?');">
         <input type="hidden" name="id" value="<?= $qcm['id'] ?>">
-        <button type="submit" class="btn btn-danger">🗑️ Supprimer</button>
+        <button type="submit" class="btn btn-danger">Supprimer</button>
     </form>
-    <button onclick="window.print()" class="btn btn-secondary">🖨️ Imprimer</button>
+    <button onclick="window.print()" class="btn btn-secondary">Imprimer</button>
 </div>
 
 <!-- Questions -->
 <?php if (empty($questions)) : ?>
     <div class="no-questions">
-        <h3>⚠️ Aucune question dans ce QCM</h3>
+        <h3>Aucune question dans ce QCM</h3>
         <p>Ce QCM ne contient aucune question pour le moment.</p>
         <a href="modifier_qcm.php?id=<?= $qcm['id'] ?>" class="btn btn-primary">
-            ➕ Ajouter des questions
+            Ajouter des questions
         </a>
     </div>
 <?php else : ?>
