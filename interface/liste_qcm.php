@@ -55,6 +55,8 @@ if (isset($pdo)) {
 </header>
 
 <br>
+<a href="importer_qcm.php">Importer un QCM</a>
+<br>
 <a href="qcm.php">Créer un nouveau QCM</a>
 <br><br>
 <h1>Mes QCM</h1>

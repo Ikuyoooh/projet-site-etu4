@@ -229,6 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 <header id="header">
     <h2>Modifier le QCM</h2>
+    <link rel="stylesheet" href="style.css">
 </header>
 
 <a href="liste_qcm.php" class="as"> ⬅ Retour à la liste</a>

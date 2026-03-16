@@ -60,6 +60,7 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Voir QCM - <?= htmlspecialchars($qcm['titre']) ?></title>
+    <link rel="stylesheet" href="style.css">
     <style>
         .qcm-header {
             background: #f0f0f0;
