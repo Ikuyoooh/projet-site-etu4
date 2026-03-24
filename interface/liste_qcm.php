@@ -79,6 +79,10 @@ if (isset($pdo)) {
             <div class="actions">
                 <a href="voir_qcm.php?id=<?= $qcm['id'] ?>">Voir</a>
                 <a href="modifier_qcm.php?id=<?= $qcm['id'] ?>">Modifier</a>
+                <a href="copier_qcm.php?id=<?= $qcm['id'] ?>"
+                   onclick="return confirm('Dupliquer le QCM &quot;<?= htmlspecialchars($qcm['titre'], ENT_QUOTES, 'UTF-8') ?>&quot; ?');">
+                   Copier
+                </a>
                 <form method="post" action="supprimer_qcm.php"
                       onsubmit="return confirm('Supprimer ce QCM ?');">
                     <input type="hidden" name="id" value="<?= $qcm['id'] ?>">

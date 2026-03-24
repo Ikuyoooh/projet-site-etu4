@@ -191,6 +191,7 @@ if (isset($_GET['id'])) {
         <button type="submit" class="btn btn-danger">Supprimer</button>
     </form>
     <button onclick="window.print()" class="btn btn-secondary">Imprimer</button>
+    <a href="exporter_qcm.php?id=<?= $qcm['id'] ?>" class="btn btn-primary">Exporter le QCM</a>
 </div>
 
 <!-- Questions -->
