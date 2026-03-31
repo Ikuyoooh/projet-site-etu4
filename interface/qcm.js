@@ -41,6 +41,10 @@ function ajouterQuestion() {
         </div>
         
         <br>
+        <button type="button" class="btn-choose-bank" onclick="chargerDepuisBanque('question-${questionCount}')">
+            Choisir depuis la liste de questions
+        </button>
+        &nbsp;
         <button type="button" class="btn-remove-question" onclick="supprimerQuestion('question-${questionCount}')">
             Supprimer cette question
         </button>
@@ -52,10 +56,43 @@ function ajouterQuestion() {
 
 function supprimerQuestion(questionId) {
     if (confirm('Voulez-vous vraiment supprimer cette question ?')) {
-        document.getElementById(questionId).remove();
+        const bloc = document.getElementById(questionId);
+        if (bloc) {
+            bloc.remove();
+            renumeroterQuestions();
+        }
     }
 }
 
+
+function renumeroterQuestions() {
+    const questionBlocks = document.querySelectorAll('.question-block');
+    questionBlocks.forEach((block, index) => {
+        const numero = index + 1;
+        // Met à jour le titre
+        const titre = block.querySelector('h3');
+        if (titre) {
+            titre.textContent = `Question ${numero}`;
+        }
+        // Met à jour l'id du bloc
+        block.id = `question-${numero}`;
+        // Met à jour les groupes de radios (name) et les boutons qui référencent l'id
+        const radios = block.querySelectorAll('input[type="radio"]');
+        radios.forEach(r => {
+            r.name = `reponse-${numero}`;
+        });
+        const btnChoisir = block.querySelector('.btn-choose-bank');
+        const btnSupprimer = block.querySelector('.btn-remove-question');
+        if (btnChoisir) {
+            btnChoisir.setAttribute('onclick', `chargerDepuisBanque('question-${numero}')`);
+        }
+        if (btnSupprimer) {
+            btnSupprimer.setAttribute('onclick', `supprimerQuestion('question-${numero}')`);
+        }
+    });
+    // Met à jour le compteur global pour la prochaine création
+    questionCount = questionBlocks.length;
+}
 
 function collecterQuestions() {
     const questions = [];
@@ -88,6 +125,77 @@ function collecterQuestions() {
 }
 
 
+async function chargerDepuisBanque(questionId) {
+    try {
+        const response = await fetch('questions_banque_api.php');
+        const data = await response.json();
+
+        if (!data.success) {
+            alert(data.message || "Impossible de récupérer la liste des questions.");
+            return;
+        }
+
+        if (!data.questions || data.questions.length === 0) {
+            alert("La liste de questions est vide pour le moment.");
+            return;
+        }
+
+        // Construction d'une liste simple pour le prompt
+        const lignes = data.questions.map(q => {
+            return `${q.id}: ${q.question.substring(0, 60)}${q.question.length > 60 ? '...' : ''}`;
+        });
+
+        const saisie = prompt(
+            "Choisissez l'ID de la question à charger parmi la liste suivante :\n\n" +
+            lignes.join("\n") +
+            "\n\nID choisi :"
+        );
+
+        if (!saisie) {
+            return;
+        }
+
+        const idChoisi = parseInt(saisie, 10);
+        if (isNaN(idChoisi)) {
+            alert("ID invalide.");
+            return;
+        }
+
+        const questionChoisie = data.questions.find(q => parseInt(q.id, 10) === idChoisi);
+        if (!questionChoisie) {
+            alert("Aucune question trouvée pour cet ID.");
+            return;
+        }
+
+        const block = document.getElementById(questionId);
+        if (!block) {
+            alert("Bloc de question introuvable.");
+            return;
+        }
+
+        const textarea = block.querySelector('.question-text');
+        const input1 = block.querySelector('.choix-1');
+        const input2 = block.querySelector('.choix-2');
+        const input3 = block.querySelector('.choix-3');
+        const input4 = block.querySelector('.choix-4');
+
+        if (textarea) textarea.value = questionChoisie.question;
+        if (input1) input1.value = questionChoisie.choix_1;
+        if (input2) input2.value = questionChoisie.choix_2;
+        if (input3) input3.value = questionChoisie.choix_3 || '';
+        if (input4) input4.value = questionChoisie.choix_4 || '';
+
+        const bonne = parseInt(questionChoisie.bonne_reponse, 10);
+        const radios = block.querySelectorAll('input[type="radio"]');
+        radios.forEach(r => {
+            r.checked = parseInt(r.value, 10) === bonne;
+        });
+    } catch (e) {
+        console.error(e);
+        alert("Erreur lors de la récupération des questions de la liste.");
+    }
+}
+
 document.getElementById('formQCM').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -95,7 +203,7 @@ document.getElementById('formQCM').addEventListener('submit', function(e) {
     const temps = document.getElementById('tempsQCM').value;
     const matiere = document.getElementById('matiereQCM').value;
     const module = document.getElementById('moduleQCM').value;
-    const cours = document.getElementById('coursQCM').value;
+    const cours = matiere;
     
     console.log('Données générales:', { titre, temps, matiere, module, cours });
     

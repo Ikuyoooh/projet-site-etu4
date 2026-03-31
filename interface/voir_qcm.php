@@ -147,7 +147,7 @@ if (isset($_GET['id'])) {
             font-weight: bold;
         }
         .btn-primary { background: #007bff; color: white; }
-        .btn-warning { background: #ffc107; color: #333; }
+        .btn-warning { background:rgb(255, 188, 2); color: #333; }
         .btn-danger { background: #dc3545; color: white; }
         .btn-secondary { background: #6c757d; color: white; }
         .no-questions {

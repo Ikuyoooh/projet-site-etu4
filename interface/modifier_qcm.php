@@ -63,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 
     try {
+        // Mise à jour des infos générales du QCM
         $stmt_update = $pdo->prepare("UPDATE qcm SET titre = :titre, temps = :temps, cours = :cours, module = :module WHERE id = :qcm_id AND user_id = :user_id");
         $stmt_update->execute([
             ':titre'   => $titre,
@@ -73,22 +74,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             ':user_id' => $user_id
         ]);
 
+        // On remplace toutes les questions existantes du QCM
         $stmt_delete = $pdo->prepare("DELETE FROM qcm_questions WHERE qcm_id = :qcm_id");
         $stmt_delete->execute([':qcm_id' => $qcm_id]);
 
+        // Recréation des questions du QCM
         $stmt_insert = $pdo->prepare("INSERT INTO qcm_questions (qcm_id, question, choix_1, choix_2, choix_3, choix_4, bonne_reponse, ordre) VALUES (:qcm_id, :question, :choix_1, :choix_2, :choix_3, :choix_4, :bonne_reponse, :ordre)");
 
+        // Insertion dans la banque de questions (nouvelles versions)
+        $stmt_banque = $pdo->prepare("
+            INSERT INTO questions_banque (user_id, question, choix_1, choix_2, choix_3, choix_4, bonne_reponse, date_creation)
+            VALUES (:user_id, :question, :choix_1, :choix_2, :choix_3, :choix_4, :bonne_reponse, NOW())
+        ");
+
         foreach ($questions_data as $index => $q) {
+            $questionText = trim($q['question'] ?? '');
+            $choix1 = trim($q['choix_1'] ?? '');
+            $choix2 = trim($q['choix_2'] ?? '');
+            $choix3 = trim($q['choix_3'] ?? '');
+            $choix4 = trim($q['choix_4'] ?? '');
+            $bonneReponse = intval($q['bonne_reponse'] ?? 0);
+
+            // Insertion dans qcm_questions
             $stmt_insert->execute([
                 ':qcm_id'       => $qcm_id,
-                ':question'     => $q['question'],
-                ':choix_1'      => $q['choix_1'],
-                ':choix_2'      => $q['choix_2'],
-                ':choix_3'      => $q['choix_3'] ?? '',
-                ':choix_4'      => $q['choix_4'] ?? '',
-                ':bonne_reponse'=> intval($q['bonne_reponse']),
+                ':question'     => $questionText,
+                ':choix_1'      => $choix1,
+                ':choix_2'      => $choix2,
+                ':choix_3'      => $choix3,
+                ':choix_4'      => $choix4,
+                ':bonne_reponse'=> $bonneReponse,
                 ':ordre'        => $index + 1
             ]);
+
+            // Enregistrer aussi dans la banque
+            if ($questionText && $choix1 && $choix2 && $bonneReponse >= 1 && $bonneReponse <= 4) {
+                $stmt_banque->execute([
+                    ':user_id'       => $user_id,
+                    ':question'      => $questionText,
+                    ':choix_1'       => $choix1,
+                    ':choix_2'       => $choix2,
+                    ':choix_3'       => $choix3,
+                    ':choix_4'       => $choix4,
+                    ':bonne_reponse' => $bonneReponse
+                ]);
+            }
         }
 
         echo json_encode(["success" => true, "message" => "QCM modifié avec succès ! (" . count($questions_data) . " question(s))"]);
@@ -223,6 +253,10 @@ function ajouterQuestion(data = null) {
             <input type="text" class="choix-4" placeholder="Reponse 4 (optionnelle)" value="${choix4}">
         </div>
         <br>
+        <button type="button" class="btn-add-question" onclick="chargerDepuisBanque('question-${questionCount}')">
+            Choisir depuis la liste de questions
+        </button>
+        &nbsp;
         <button type="button" class="btn-remove-question" onclick="supprimerQuestion('question-${questionCount}')">Supprimer cette question</button>
     `;
 
@@ -233,7 +267,103 @@ function supprimerQuestion(questionId) {
     const bloc = document.getElementById(questionId);
     if (bloc) {
         bloc.remove();
+        renumeroterQuestions();
     }
+}
+
+async function chargerDepuisBanque(questionId) {
+    try {
+        const response = await fetch('questions_banque_api.php');
+        const data = await response.json();
+
+        if (!data.success) {
+            afficherPopup(data.message || "Impossible de récupérer la liste des questions.");
+            return;
+        }
+
+        if (!data.questions || data.questions.length === 0) {
+            afficherPopup("La liste de questions est vide pour le moment.");
+            return;
+        }
+
+        const lignes = data.questions.map(q => {
+            return `${q.id}: ${q.question.substring(0, 60)}${q.question.length > 60 ? '...' : ''}`;
+        });
+
+        const saisie = prompt(
+            "Choisissez l'ID de la question à charger parmi la liste suivante :\n\n" +
+            lignes.join("\n") +
+            "\n\nID choisi :"
+        );
+
+        if (!saisie) {
+            return;
+        }
+
+        const idChoisi = parseInt(saisie, 10);
+        if (isNaN(idChoisi)) {
+            afficherPopup("ID invalide.");
+            return;
+        }
+
+        const questionChoisie = data.questions.find(q => parseInt(q.id, 10) === idChoisi);
+        if (!questionChoisie) {
+            afficherPopup("Aucune question trouvée pour cet ID.");
+            return;
+        }
+
+        const block = document.getElementById(questionId);
+        if (!block) {
+            afficherPopup("Bloc de question introuvable.");
+            return;
+        }
+
+        const textarea = block.querySelector('.question-text');
+        const input1 = block.querySelector('.choix-1');
+        const input2 = block.querySelector('.choix-2');
+        const input3 = block.querySelector('.choix-3');
+        const input4 = block.querySelector('.choix-4');
+
+        if (textarea) textarea.value = questionChoisie.question;
+        if (input1) input1.value = questionChoisie.choix_1;
+        if (input2) input2.value = questionChoisie.choix_2;
+        if (input3) input3.value = questionChoisie.choix_3 || '';
+        if (input4) input4.value = questionChoisie.choix_4 || '';
+
+        const bonne = parseInt(questionChoisie.bonne_reponse, 10);
+        const radios = block.querySelectorAll('input[type="radio"]');
+        radios.forEach(r => {
+            r.checked = parseInt(r.value, 10) === bonne;
+        });
+    } catch (e) {
+        console.error(e);
+        afficherPopup("Erreur lors de la récupération des questions de la liste.");
+    }
+}
+
+function renumeroterQuestions() {
+    const questionBlocks = document.querySelectorAll('.question-block');
+    questionBlocks.forEach((block, index) => {
+        const numero = index + 1;
+        const titre = block.querySelector('h3');
+        if (titre) {
+            titre.textContent = `Question ${numero}`;
+        }
+        block.id = `question-${numero}`;
+        const radios = block.querySelectorAll('input[type="radio"]');
+        radios.forEach(r => {
+            r.name = `reponse-${numero}`;
+        });
+        const btnChoisir = block.querySelector('.btn-add-question');
+        const btnSupprimer = block.querySelector('.btn-remove-question');
+        if (btnChoisir) {
+            btnChoisir.setAttribute('onclick', `chargerDepuisBanque('question-${numero}')`);
+        }
+        if (btnSupprimer) {
+            btnSupprimer.setAttribute('onclick', `supprimerQuestion('question-${numero}')`);
+        }
+    });
+    questionCount = questionBlocks.length;
 }
 
 function afficherPopup(message) {
