@@ -19,7 +19,7 @@ if ($qcm_id <= 0) {
 try {
     $pdo->beginTransaction();
 
-    // Recuperer le QCM source (appartenant a l'utilisateur)
+    // Recup qcm source
     $stmt_qcm = $pdo->prepare("
         SELECT titre, temps, cours, module
         FROM qcm
@@ -38,7 +38,7 @@ try {
         exit;
     }
 
-    // Inserer le nouveau QCM duplique
+    // Inserer nouveau qcm duplique
     $stmt_insert_qcm = $pdo->prepare("
         INSERT INTO qcm (titre, temps, cours, module, date_creation, user_id)
         VALUES (:titre, :temps, :cours, :module, NOW(), :user_id)
@@ -52,7 +52,7 @@ try {
     ]);
     $new_qcm_id = $pdo->lastInsertId();
 
-    // Recuperer les questions du QCM source
+    // Recup questions qcm source
     $stmt_questions = $pdo->prepare("
         SELECT question, choix_1, choix_2, choix_3, choix_4, bonne_reponse, ordre
         FROM qcm_questions
@@ -62,7 +62,7 @@ try {
     $stmt_questions->execute([':qcm_id' => $qcm_id]);
     $questions = $stmt_questions->fetchAll(PDO::FETCH_ASSOC);
 
-    // Inserer les questions sur le nouveau QCM
+    // Inserer questions sur nouveau qcm
     if (!empty($questions)) {
         $stmt_insert_question = $pdo->prepare("
             INSERT INTO qcm_questions
@@ -86,7 +86,7 @@ try {
     }
 
     $pdo->commit();
-    $_SESSION['success'] = "QCM duplique avec succes.";
+    $_SESSION['success'] = "QCM dupliqué avec succès.";
 } catch (PDOException $e) {
     if ($pdo->inTransaction()) {
         $pdo->rollBack();

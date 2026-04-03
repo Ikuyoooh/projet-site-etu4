@@ -18,7 +18,7 @@ $nom = $_SESSION['nom'] ?? '';
             }
         }
         
-        // Initialisation au chargement
+        
         window.onload = () => {
             const isDark = localStorage.getItem('dark-mode') === 'true';
             if (isDark) {
@@ -27,14 +27,14 @@ $nom = $_SESSION['nom'] ?? '';
             updateDarkToggleImage(isDark);
         };
         
-        // Toggle du mode sombre
+        
         darkToggleBtn.addEventListener('click', () => {
             const isDark = document.body.classList.toggle('dark-mode');
             localStorage.setItem('dark-mode', isDark);
             updateDarkToggleImage(isDark);
         });
         
-        // Retirer le flash au chargement
+        
         if (localStorage.getItem('dark-mode') === 'true') {
             document.documentElement.classList.add('dark-mode');
         }

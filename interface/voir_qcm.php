@@ -11,12 +11,12 @@ $user_id = $_SESSION['id'];
 $qcm = null;
 $questions = [];
 
-// Récupération de l'ID du QCM
+// recup id qcm
 if (isset($_GET['id'])) {
     $qcm_id = intval($_GET['id']);
     
     try {
-        // 1️⃣ Récupérer les informations du QCM
+        //Recup infos qcm
         $stmt_qcm = $pdo->prepare("
             SELECT * FROM qcm 
             WHERE id = :qcm_id AND user_id = :user_id
@@ -33,7 +33,7 @@ if (isset($_GET['id'])) {
             exit;
         }
         
-        // 2️⃣ Récupérer toutes les questions du QCM
+        // Recup questions qcm
         $stmt_questions = $pdo->prepare("
             SELECT * FROM qcm_questions 
             WHERE qcm_id = :qcm_id 
@@ -180,7 +180,7 @@ if (isset($_GET['id'])) {
     <small style="color: #666;">Créé le : <?= htmlspecialchars($qcm['date_creation']) ?></small>
 </div>
 
-<!-- Barre d'actions -->
+
 <div class="actions-bar">
     <a href="modifier_qcm.php?id=<?= $qcm['id'] ?>" class="btn btn-warning">
         Modifier ce QCM
@@ -194,11 +194,11 @@ if (isset($_GET['id'])) {
     <a href="exporter_qcm.php?id=<?= $qcm['id'] ?>" class="btn btn-primary">Exporter le QCM</a>
 </div>
 
-<!-- Questions -->
+
 <?php if (empty($questions)) : ?>
     <div class="no-questions">
         <h3>Aucune question dans ce QCM</h3>
-        <p>Ce QCM ne contient aucune question pour le moment.</p>
+        <p>Ce QCM ne contient pas de question pour le moment.</p>
         <a href="modifier_qcm.php?id=<?= $qcm['id'] ?>" class="btn btn-primary">
             Ajouter des questions
         </a>

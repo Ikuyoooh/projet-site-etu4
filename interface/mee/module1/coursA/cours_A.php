@@ -25,6 +25,7 @@
             <li><a href="#">Cour 4</a></li>
             <li><a href="#">Cour 5</a></li>
             <li><a href="#">Cour 6</a></li>
+            <li><a href="qcm_eleves.php">QCM test</a></li>
           </ul>
         </li>
       </ul>

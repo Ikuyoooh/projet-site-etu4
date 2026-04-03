@@ -11,9 +11,9 @@ $user_id = $_SESSION['id'];
 $erreurs = [];
 $message = '';
 
-// Actions POST : suppression ou import CSV
+// Actions post : suppression ou import csv
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Suppression d'une question de la banque
+    // Suppression question banque
     if (isset($_POST['action']) && $_POST['action'] === 'supprimer' && isset($_POST['id'])) {
         $id = intval($_POST['id']);
 
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Import de questions depuis un fichier CSV
+    // Import questions depuis csv
     if (isset($_POST['action']) && $_POST['action'] === 'importer_questions' && isset($_FILES['fichier_questions'])) {
         if ($_FILES['fichier_questions']['error'] === UPLOAD_ERR_OK) {
             $fichier_tmp = $_FILES['fichier_questions']['tmp_name'];
@@ -44,8 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $nb_importees = 0;
 
                     while (($data = fgetcsv($handle, 1000, ';')) !== false) {
-                        // Format attendu:
-                        // question;choix_1;choix_2;choix_3;choix_4;bonne_reponse
                         if (count($data) < 6) {
                             continue;
                         }
@@ -57,13 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $choix_4 = trim($data[4]);
                         $bonne_reponse = intval($data[5]);
 
-                        // Ignore les lignes d'entête (avec ou sans BOM UTF-8)
+                        // Ignore lignes entête (avec ou sans BOM UTF-8)
                         $question_sans_bom = ltrim($question, "\xEF\xBB\xBF");
                         if (strtolower($question_sans_bom) === 'question') {
                             continue;
                         }
 
-                        // Ignore les lignes invalides/vides
+                        // Ignore lignes invalides/vides
                         if ($question === '' || $choix_1 === '' || $choix_2 === '') {
                             continue;
                         }
@@ -106,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Debug : vider toute la banque de questions de cet utilisateur
+    // Debug : vider toutes question banque pour cet utilisateur
     if (isset($_POST['action']) && $_POST['action'] === 'vider_banque') {
         try {
             $stmt = $pdo->prepare("DELETE FROM questions_banque WHERE user_id = :user_id");
@@ -119,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Récupération des questions de la banque pour l'utilisateur
+// Recup questions banque pour utilisateur
 $questions_banque = [];
 try {
     $stmt = $pdo->prepare("

@@ -58,13 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         
         $qcm_id = $pdo->lastInsertId();
         
-        // Insertion des questions du QCM
+        // Insertion questions qcm
         $stmt_question = $pdo->prepare("
             INSERT INTO qcm_questions (qcm_id, question, choix_1, choix_2, choix_3, choix_4, bonne_reponse, ordre)
             VALUES (:qcm_id, :question, :choix_1, :choix_2, :choix_3, :choix_4, :bonne_reponse, :ordre)
         ");
         
-        // Préparation de l'insertion dans la banque de questions
+        // Preparation insertion dans banque
         $stmt_banque = $pdo->prepare("
             INSERT INTO questions_banque (user_id, question, choix_1, choix_2, choix_3, choix_4, bonne_reponse, date_creation)
             VALUES (:user_id, :question, :choix_1, :choix_2, :choix_3, :choix_4, :bonne_reponse, NOW())
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $choix4 = trim($q['choix_4'] ?? '');
             $bonneReponse = intval($q['bonne_reponse'] ?? 0);
             
-            // Insère dans qcm_questions
+            // Inserer dans qcm_questions
             $stmt_question->execute([
                 ':qcm_id' => $qcm_id,
                 ':question' => $questionText,
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 ':ordre' => $index + 1
             ]);
             
-            // Enregistre aussi dans la banque (si données valides)
+            // enregistre dans banque 
             if ($questionText && $choix1 && $choix2 && $bonneReponse >= 1 && $bonneReponse <= 4) {
                 $stmt_banque->execute([
                     ':user_id' => $user_id,
