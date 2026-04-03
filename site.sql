@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 16 mars 2026 à 12:47
+-- Généré le : ven. 03 avr. 2026 à 08:34
 -- Version du serveur : 9.1.0
 -- Version de PHP : 8.3.14
 
@@ -70,7 +70,10 @@ CREATE TABLE IF NOT EXISTS `qcm` (
 --
 
 INSERT INTO `qcm` (`id`, `titre`, `temps`, `cours`, `module`, `date_creation`, `user_id`) VALUES
-(9, 'IUH', 12, 'COURSA', 'Module 1', '2026-03-02 16:46:04', 18);
+(1, 'IUH', 67, 'MELEC', 'Module 1', '2026-03-24 16:17:04', 18),
+(2, 'IUH (copie)', 67, 'MELEC', 'Module 1', '2026-03-24 16:18:05', 18),
+(3, 'test 3', 64, 'MELEC', 'Module 1', '2026-03-24 16:18:57', 18),
+(8, 'test bq', 12, 'MEE', 'Module 3', '2026-03-31 11:52:24', 18);
 
 -- --------------------------------------------------------
 
@@ -91,15 +94,44 @@ CREATE TABLE IF NOT EXISTS `qcm_questions` (
   `ordre` int DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `qcm_id` (`qcm_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `qcm_questions`
 --
 
 INSERT INTO `qcm_questions` (`id`, `qcm_id`, `question`, `choix_1`, `choix_2`, `choix_3`, `choix_4`, `bonne_reponse`, `ordre`) VALUES
-(10, 9, 'ça va', 'ui', 'ui', 'nn', '', 1, 1),
-(11, 9, 'test', 'non', 'vv', '', '', 1, 2);
+(3, 1, 'est ce que yassine est multi millionnaire', 'non', 'oui', '', '', 1, 1),
+(4, 1, 'ça va', 'non', 'non', '', '', 2, 2),
+(5, 1, 'test', 'test', 'nn', '', '', 1, 3),
+(12, 2, 'ça va', 'non', 'non', '', '', 2, 2),
+(11, 2, 'est ce que yassine est multi millionnaire', 'non', 'oui', '', '', 2, 1),
+(9, 3, 'est ce que yassine est multi millionnaire', 'non', 'oui', '', '', 1, 1),
+(10, 3, 'ça va', 'non', 'non', '', '', 2, 2),
+(13, 2, 'test', 'test', 'nn', '', '', 1, 3),
+(20, 8, 'ça dit quoi', 'rien', 'miaou', '', '', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `questions_banque`
+--
+
+DROP TABLE IF EXISTS `questions_banque`;
+CREATE TABLE IF NOT EXISTS `questions_banque` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `matiere` varchar(255) DEFAULT NULL,
+  `module` varchar(255) DEFAULT NULL,
+  `question` text NOT NULL,
+  `choix_1` varchar(255) NOT NULL,
+  `choix_2` varchar(255) NOT NULL,
+  `choix_3` varchar(255) DEFAULT NULL,
+  `choix_4` varchar(255) DEFAULT NULL,
+  `bonne_reponse` int NOT NULL,
+  `date_creation` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=190 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
