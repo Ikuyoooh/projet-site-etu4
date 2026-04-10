@@ -50,4 +50,4 @@ if ($cours !== '' && $module !== '') {
         <?php endforeach; ?>
     <?php endif; ?>
 </body>
-</html>
+</html> 
